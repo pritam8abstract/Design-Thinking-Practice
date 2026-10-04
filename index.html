@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>NIT Warangal Hostel Complaint Desk</title>
+<style>
+:root {
+  /* Apple Light Mode Palette */
+  --bg: #f5f5f7;
+  --card: #ffffff;
+  --ink: #1d1d1f;
+  --mut: #86868b;
+  --line: #d2d2d7;
+  --ok: #34c759;
+  --warn: #ff9f0a;
+  --bad: #ff3b30;
+  --info: #0071e3;
+  --accent: #0071e3;
+  --input-bg: rgba(118, 118, 128, 0.08);
+  
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Apple Dark Mode Palette */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #000000;
+    --card: #1c1c1e;
+    --ink: #f5f5f7;
+    --mut: #86868b;
+    --line: #38383a;
+    --ok: #32d74b;
+    --warn: #ffd60a;
+    --bad: #ff453a;
+    --info: #0a84ff;
+    --accent: #0a84ff;
+    --input-bg: rgba(118, 118, 128, 0.24);
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #000000; --card: #1c1c1e; --ink: #f5f5f7; --mut: #86868b;
+  --line: #38383a; --ok: #32d74b; --warn: #ffd60a; --bad: #ff453a; 
+  --info: #0a84ff; --accent: #0a84ff; --input-bg: rgba(118, 118, 128, 0.24);
+}
+
+html { scroll-padding-top: env(safe-area-inset-top, 0px); }
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font: 15px/1.5 -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", sans-serif;
+  font-weight: 700;
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+/* Apple Translucent Header */
+header.top {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) header.top {
+    background: rgba(28, 28, 30, 0.72);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+}
+
+.bar {
+  max-width: 1180px;
+  margin: auto;
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* Logo Styling */
+.crest {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  overflow: hidden;
+}
+.crest img {
+  width: 90%;
+  height: 90%;
+  object-fit: contain;
+}
+
+.bar .t { flex: 1; min-width: 180px; }
+.bar .t b {
+  font-size: 19px;
+  display: block;
+  /* Flashy gradient for header text */
+  background: linear-gradient(135deg, #0071e3, #4158d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bar .t b {
+    background: linear-gradient(135deg, #2997ff, #70b9f0);
+    -webkit-background-clip: text;
+  }
+}
+.bar .t span { font-size: 13px; font-weight: 500; color: var(--mut); }
+.who { font-size: 13px; font-weight: 500; color: var(--mut); }
+
+/* Buttons */
+button, .btn {
+  font: inherit; cursor: pointer; border: 0;
+  border-radius: 980px; /* Pill shape */
+  padding: 10px 20px; font-weight: 600;
+  transition: all 0.2s cubic-bezier(0.25, 1, 0.5, 1);
+}
+button:active { transform: scale(0.96); }
+
+/* Standard Button */
+.b1 { background: var(--input-bg); color: var(--ink); }
+.b1:hover { background: var(--line); }
+
+/* Outline Button */
+.b2 { background: transparent; color: var(--info); border: 1px solid var(--info); }
+.b2:hover { background: rgba(0, 113, 227, 0.1); }
+
+/* Flashy Primary Action Button (Apple Event Style) */
+.bn {
+  background: linear-gradient(135deg, #0071e3, #4158d0);
+  color: #fff !important;
+  box-shadow: 0 4px 12px rgba(0, 113, 227, 0.25);
+  border: none;
+}
+.bn:hover {
+  box-shadow: 0 6px 16px rgba(0, 113, 227, 0.4);
+  transform: translateY(-1px);
+}
+
+main { max-width: 1180px; margin: auto; padding: 32px 20px 80px; }
+
+/* Cards (Soft Shadows & Squircles) */
+.card {
+  background: var(--card);
+  border: none;
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.04);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .card { box-shadow: 0 4px 24px rgba(0, 0, 0, 0.2); }
+}
+
+.grid { display: grid; gap: 24px; }
+.g2 { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); }
+@media(max-width:900px){ .g2 { grid-template-columns: 1fr; } }
+
+label { display: block; font-weight: 600; font-size: 13.5px; margin: 16px 0 6px; color: var(--ink); }
+
+/* Inputs */
+input, select, textarea {
+  width: 100%; font: inherit; color: var(--ink);
+  background: var(--input-bg);
+  border: 1.5px solid transparent;
+  border-radius: 12px;
+  padding: 12px 14px;
+  transition: all 0.2s ease;
+}
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: var(--card);
+  box-shadow: 0 0 0 4px rgba(0, 113, 227, 0.15);
+}
+
+.row { display: flex; gap: 14px; }
+.row > * { flex: 1; min-width: 0; }
+
+.chk {
+  display: flex; gap: 12px; align-items: flex-start;
+  font-weight: 500; margin-top: 20px; padding: 14px;
+  background: var(--input-bg); border-radius: 14px;
+  border: 1px solid var(--line);
+}
+.chk input { width: auto; margin-top: 4px; transform: scale(1.1); }
+.err { color: var(--bad); font-size: 13px; margin-top: 6px; min-height: 18px; font-weight: 500; }
+.hint { color: var(--mut); font-size: 13px; }
+
+/* Badges */
+.badge {
+  display: inline-block; padding: 4px 12px; border-radius: 980px;
+  font-size: 12px; font-weight: 600; white-space: nowrap;
+}
+.s-Pending { background: var(--input-bg); color: var(--mut); }
+.s-Partial { background: rgba(10, 132, 255, 0.15); color: var(--info); }
+.s-Complete { background: rgba(52, 199, 89, 0.15); color: var(--ok); }
+.s-Parts { background: rgba(255, 159, 10, 0.15); color: var(--warn); }
+
+/* List Items */
+.item {
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 18px;
+  margin-bottom: 14px;
+  background: var(--card);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+.item .h { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; }
+
+/* Tracking ID */
+.tid { font: 600 13px ui-monospace, Menlo, monospace; color: var(--info); }
+
+.meta { display: flex; flex-wrap: wrap; gap: 6px 18px; color: var(--mut); font-size: 13.5px; margin-top: 10px; }
+.meta b { color: var(--ink); font-weight: 600; }
+
+/* Admin Stats Cards */
+.stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 16px; margin-bottom: 24px; }
+.stat {
+  background: var(--card);
+  border: none;
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.stat b {
+  font-size: 34px; font-weight: 700;
+  background: linear-gradient(135deg, #0071e3, #4158d0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.stat span { color: var(--mut); font-size: 14px; font-weight: 500; }
+
+.tw { overflow-x: auto; border: 1px solid var(--line); border-radius: 16px; background: var(--card); }
+table { border-collapse: collapse; width: 100%; min-width: 980px; font-size: 14px; }
+th { background: rgba(118, 118, 128, 0.05); color: var(--mut); text-align: left; padding: 14px 16px; font-weight: 600; white-space: nowrap; border-bottom: 1px solid var(--line); }
+td { padding: 14px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: none; }
+
+.radios { display: grid; gap: 8px; margin: 10px 0; }
+.radios label { display: flex; gap: 10px; align-items: center; font-weight: 500; margin: 0; padding: 12px 14px; border: 1px solid var(--line); border-radius: 12px; cursor: pointer; background: var(--card); transition: all 0.2s; }
+.radios label:hover { background: var(--input-bg); }
+.radios input { width: auto; transform: scale(1.1); }
+.prev { max-width: 150px; max-height: 110px; border-radius: 10px; margin-top: 10px; border: 1px solid var(--line); object-fit: cover; }
+.hide { display: none !important; }
+.empty { text-align: center; color: var(--mut); padding: 40px 20px; font-weight: 500; }
+
+.login { max-width: 400px; margin: 6vh auto; padding: 40px 32px; }
+.login h2 { font-size: 28px; text-align: center; margin-bottom: 8px; }
+.creds { margin-top: 24px; font-size: 13px; color: var(--mut); background: var(--input-bg); padding: 16px; border-radius: 12px; line-height: 1.6; }
+
+.stars { display: flex; gap: 4px; }
+.stars button { background: none; font-size: 32px; padding: 0; color: var(--line); line-height: 1; transform: none; }
+.stars button.on { color: #ff9f0a; text-shadow: 0 2px 8px rgba(255, 159, 10, 0.4); }
+
+/* Dialog (Apple style pop-up) */
+dialog {
+  border: 0; border-radius: 24px; padding: 32px; width: min(440px, 92vw);
+  background: var(--card); color: var(--ink);
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.15);
+}
+dialog::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+
+/* Toast Notification */
+.toast {
+  position: fixed; left: 50%; bottom: calc(30px + env(safe-area-inset-bottom, 0px));
+  transform: translateX(-50%);
+  background: rgba(28, 28, 30, 0.9);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  color: #fff; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  padding: 14px 24px; border-radius: 980px; z-index: 50; font-weight: 500;
+  animation: slideUp 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+@keyframes slideUp { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
+
+.tools { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; justify-content: space-between; margin-bottom: 16px; }
+.tools select { width: auto; font-weight: 500; }
+</style>
+</head>
+<body>
+<header class="top"><div class="bar">
+  <!-- Added the official NIT Warangal Logo here -->
+  <div class="crest">
+    <img src="https://upload.wikimedia.org/wikipedia/en/e/e4/National_Institute_of_Technology%2C_Warangal_logo.png" alt="NIT Warangal Logo">
+  </div>
+  <div class="t"><b>NITW Complaint Desk</b><span>Report it. Track it. Get it fixed.</span></div>
+  <span class="who hide" id="who"></span>
+  <button class="b1 hide" id="out">Log out</button>
+</div></header>
+<main id="app"></main>
+<dialog id="dlg"></dialog>
+<script>
+(function(){
+var KEY="nitw_hostel_complaints",SES="nitw_hostel_session",mem={};
+function get(k){try{var v=localStorage.getItem(k);return v}catch(e){return mem[k]||null}}
+function set(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}}
+function del(k){try{localStorage.removeItem(k)}catch(e){delete mem[k]}}
+function load(){try{return JSON.parse(get(KEY))||[]}catch(e){return[]}}
+function save(a){set(KEY,JSON.stringify(a))}
+function user(){try{return JSON.parse(get(SES))}catch(e){return null}}
+var $=function(s,r){return(r||document).querySelector(s)};
+function esc(s){return String(s==null?"":s).replace(/[&<>"']/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]})}
+function toast(m){var t=document.createElement("div");t.className="toast";t.textContent=m;document.body.appendChild(t);setTimeout(function(){t.remove()},2600)}
+var CATS=["Hostel Bathroom issue","Hostel room Electric","Carpenter","Plumber","Cleaner"];
+var SLOTS=["09:00 - 11:00","11:00 - 13:00","14:00 - 16:00","16:00 - 18:00","18:00 - 20:00"];
+var ST={"Pending":"Pending","Partially complete":"Partial","Complete":"Complete","Due to unavailable parts":"Parts"};
+function badge(s){return '<span class="badge s-'+ST[s]+'">'+esc(s)+'</span>'}
+function stars(n){return n?"★".repeat(n)+"☆".repeat(5-n):""}
+function loc(c){return "Floor "+c.floor+", Wing "+c.wing+", Room "+esc(c.room)}
+
+/* ---------- Login ---------- */
+function loginView(){
+  $("#who").classList.add("hide");$("#out").classList.add("hide");
+  $("#app").innerHTML='<div class="card login"><h2>Sign in</h2><p class="hint" style="text-align:center; margin-bottom:24px;">Use your institute credentials.</p>'+
+  '<form id="lf" novalidate><label for="u">Email or username</label><input id="u" autocomplete="username" placeholder="rollno@student.nitw.ac.in">'+
+  '<label for="p">Password</label><input id="p" type="password" autocomplete="current-password">'+
+  '<div class="err" id="le"></div><button class="b1 bn" style="width:100%; margin-top:16px;">Sign in</button></form>'+
+  '<div class="creds"><b>Test accounts</b><br>Student: name@student.nitw.ac.in / 123NITWstudents<br>Worker: worker / 123NITWworkers<br>Admin: admin / 123NITadmin</div></div>';
+  $("#lf").onsubmit=function(e){
+    e.preventDefault();
+    var u=$("#u").value.trim(),p=$("#p").value,err=$("#le"),role=null,email=u;
+    if(!u||!p){err.textContent="Enter both your email/username and password.";return}
+    var low=u.toLowerCase();
+    if(low==="worker"){if(p!=="123NITWworkers"){err.textContent="Incorrect worker password.";return}role="worker"}
+    else if(low==="admin"){if(p!=="123NITadmin"){err.textContent="Incorrect admin password.";return}role="admin"}
+    else{
+      var sfx="@student.nitw.ac.in";
+      if(!(low.length>sfx.length&&low.slice(-sfx.length)===sfx&&low.indexOf("@")===low.length-sfx.length)){err.textContent="Student email must end exactly with @student.nitw.ac.in.";return}
+      if(p!=="123NITWstudents"){err.textContent="Incorrect student password.";return}
+      role="student";email=low;
+    }
+    set(SES,JSON.stringify({role:role,email:email}));route();
+  };
+}
+
+/* ---------- Student ---------- */
+function studentView(me){
+  var today=new Date().toISOString().slice(0,10);
+  var fl="",i;for(i=0;i<=9;i++)fl+='<option value="'+i+'">'+i+'</option>';
+  $("#app").innerHTML='<div class="grid g2"><section class="card"><h2>Register a complaint</h2>'+
+  '<form id="cf" novalidate><label for="cat">Category</label><select id="cat"><option value="">Select category</option>'+CATS.map(function(c){return'<option>'+c+'</option>'}).join("")+'</select>'+
+  '<div id="prw" class="hide"><label for="pri">Priority</label><select id="pri"><option value="">Select priority</option><option>High</option><option>Low</option></select><div class="hint" style="margin-top:6px;">High: lights and fans. Low: everything else.</div></div>'+
+  '<label for="dsc">Describe the problem</label><textarea id="dsc" rows="2" maxlength="300"></textarea>'+
+  '<div class="row"><div><label for="fl">Floor no.</label><select id="fl">'+fl+'</select></div><div><label for="wg">Wing</label><select id="wg"><option>A</option><option>B</option></select></div><div><label for="rm">Room no.</label><input id="rm" inputmode="numeric" maxlength="6"></div></div>'+
+  '<div class="row"><div><label for="dt">Meeting date</label><input id="dt" type="date" min="'+today+'"></div><div><label for="sl">Time slot</label><select id="sl"><option value="">Select slot</option>'+SLOTS.map(function(s){return'<option>'+s+'</option>'}).join("")+'</select></div></div>'+
+  '<label class="chk"><input type="checkbox" id="gd"><span>Execute auto-complete under the supervision of guards (if I am unavailable)</span></label>'+
+  '<div class="err" id="ce"></div><button class="b1 bn" style="width:100%; margin-top:16px;">Submit complaint</button></form></section>'+
+  '<section class="card"><h2>My complaints</h2><div id="mine" style="margin-top:14px"></div></section></div>';
+  $("#cat").onchange=function(){$("#prw").classList.toggle("hide",this.value!=="Hostel room Electric")};
+  $("#cf").onsubmit=function(e){
+    e.preventDefault();var err=$("#ce"),cat=$("#cat").value,pri=$("#pri").value,d=$("#dsc").value.trim(),rm=$("#rm").value.trim(),dt=$("#dt").value,sl=$("#sl").value;
+    if(!cat)return err.textContent="Choose a category.";
+    if(cat==="Hostel room Electric"&&!pri)return err.textContent="Choose a priority for the electrical complaint.";
+    if(d.length<5)return err.textContent="Describe the problem in a few words.";
+    if(!/^[0-9]{1,6}$/.test(rm))return err.textContent="Enter a valid room number (digits only).";
+    if(!dt)return err.textContent="Pick a meeting date.";
+    if(dt<today)return err.textContent="Meeting date cannot be in the past.";
+    if(!sl)return err.textContent="Pick a time slot.";
+    var all=load(),id="NITW-HC-"+Date.now().toString(36).toUpperCase().slice(-5)+Math.random().toString(36).slice(2,5).toUpperCase();
+    all.push({id:id,email:me.email,cat:cat,priority:cat==="Hostel room Electric"?pri:"",desc:d,floor:$("#fl").value,wing:$("#wg").value,room:rm,date:dt,slot:sl,guard:$("#gd").checked,status:"Pending",missing:"",proofName:"",proofImg:"",review:null,created:new Date().toISOString(),updated:""});
+    save(all);toast("Complaint registered. Tracking ID: "+id);studentView(me);
+  };
+  var mine=load().filter(function(c){return c.email===me.email}).reverse(),box=$("#mine");
+  if(!mine.length){box.innerHTML='<div class="empty">No complaints yet. Use the form to register your first one.</div>';return}
+  box.innerHTML=mine.map(function(c){
+    return '<div class="item"><div class="h"><span class="tid">'+c.id+'</span>'+badge(c.status)+'</div>'+
+    '<div style="margin-top:8px; font-size:16px;"><b>'+esc(c.cat)+'</b>'+(c.priority?' <span class="hint">('+c.priority+' priority)</span>':'')+'</div><div class="hint" style="margin-top:4px;">'+esc(c.desc)+'</div>'+
+    '<div class="meta"><span>'+loc(c)+'</span><span>Meet: <b>'+c.date+', '+c.slot+'</b></span>'+(c.guard?'<span>Guard supervision allowed</span>':'')+'</div>'+
+    (c.missing?'<div class="meta"><span>Waiting for parts: <b>'+esc(c.missing)+'</b></span></div>':'')+
+    (c.proofImg?'<img class="prev" alt="Proof of work" src="'+c.proofImg+'">':c.proofName?'<div class="hint" style="margin-top:8px;">Proof: '+esc(c.proofName)+'</div>':'')+
+    (c.review?'<div class="meta"><span style="color:#ff9f0a;font-size:18px">'+stars(c.review.rating)+'</span><span>'+esc(c.review.text)+'</span></div>':
+      c.status==="Complete"?'<div style="margin-top:16px"><button class="bn rv" data-id="'+c.id+'">Submit review</button></div>':'')+'</div>';
+  }).join("");
+  box.querySelectorAll(".rv").forEach(function(b){b.onclick=function(){reviewDlg(b.dataset.id,me)}});
+}
+function reviewDlg(id,me){
+  var d=$("#dlg"),r=0;
+  d.innerHTML='<h3 style="margin-bottom:4px;">Review the work</h3><p class="hint">'+id+'</p><div class="stars" id="st" style="margin:12px 0;">'+[1,2,3,4,5].map(function(n){return'<button type="button" aria-label="'+n+' stars" data-n="'+n+'">★</button>'}).join("")+'</div>'+
+  '<label for="rt">Your comments</label><textarea id="rt" rows="3" maxlength="300"></textarea><div class="err" id="re"></div>'+
+  '<div class="row" style="margin-top:20px"><button class="b1" id="rc">Cancel</button><button class="bn" id="rs">Save review</button></div>';
+  d.showModal();
+  d.querySelectorAll(".stars button").forEach(function(b){b.onclick=function(){r=+b.dataset.n;d.querySelectorAll(".stars button").forEach(function(x){x.classList.toggle("on",+x.dataset.n<=r)})}});
+  $("#rc").onclick=function(){d.close()};
+  $("#rs").onclick=function(){
+    var t=$("#rt").value.trim();
+    if(!r)return $("#re").textContent="Select a star rating.";
+    if(t.length<3)return $("#re").textContent="Write a short comment.";
+    var all=load();all.forEach(function(c){if(c.id===id)c.review={rating:r,text:t,at:new Date().toISOString()}});
+    save(all);d.close();toast("Review submitted. Thank you.");studentView(me);
+  };
+}
+
+/* ---------- Worker ---------- */
+function workerView(){
+  var all=load().slice().reverse();
+  var h='<div class="tools"><h2 style="font-size:24px;">Assigned work</h2><span class="hint">'+all.length+' complaint(s) from students</span></div>';
+  if(!all.length){$("#app").innerHTML=h+'<div class="card empty">No complaints have been submitted yet.</div>';return}
+  $("#app").innerHTML=h+'<div id="wl">'+all.map(function(c){
+    var opts=Object.keys(ST).filter(function(s){return s!=="Pending"});
+    return '<div class="item" data-id="'+c.id+'"><div class="h"><span class="tid">'+c.id+'</span>'+badge(c.status)+'</div>'+
+    '<div style="margin-top:8px; font-size:16px;"><b>'+esc(c.cat)+'</b>'+(c.priority?' <span class="badge" style="color:'+(c.priority==="High"?'var(--bad)':'var(--mut)')+'">'+c.priority+'</span>':'')+'</div><div class="hint" style="margin-top:4px;">'+esc(c.desc)+'</div>'+
+    '<div class="meta"><span>'+loc(c)+'</span><span>Student: <b>'+esc(c.email)+'</b></span><span>Meet: <b>'+c.date+', '+c.slot+'</b></span>'+(c.guard?'<span><b>Guard supervision OK</b></span>':'<span>Student must be present</span>')+'</div>'+
+    '<details style="margin-top:16px; background:var(--input-bg); padding:14px; border-radius:12px;"><summary style="cursor:pointer;font-weight:600">Update status</summary>'+
+    '<div class="radios">'+opts.map(function(s){return'<label><input type="radio" name="s'+c.id+'" value="'+s+'"'+(c.status===s?' checked':'')+'>'+s+'</label>'}).join("")+'</div>'+
+    '<div class="mp '+(c.status==="Due to unavailable parts"?'':'hide')+'"><label>Enter missing parts</label><input class="mi" value="'+esc(c.missing)+'" placeholder="e.g. 2 x 15A switch, 1 tap cartridge"></div>'+
+    '<label>Photo proof of work</label><input type="file" accept="image/*" class="pf">'+
+    (c.proofImg?'<img class="prev" alt="Proof" src="'+c.proofImg+'">':c.proofName?'<div class="hint" style="margin-top:8px;">Uploaded: '+esc(c.proofName)+'</div>':'')+'<div class="pv"></div>'+
+    '<div class="err"></div><button class="bn up" style="margin-top:16px">Save update</button></details></div>';
+  }).join("")+'</div>';
+  document.querySelectorAll("#wl .item").forEach(function(it){
+    var id=it.dataset.id,img="",nm="";
+    it.querySelectorAll('input[type=radio]').forEach(function(r){r.onchange=function(){it.querySelector(".mp").classList.toggle("hide",r.value!=="Due to unavailable parts")}});
+    it.querySelector(".pf").onchange=function(){
+      var f=this.files[0],pv=it.querySelector(".pv");img="";nm="";pv.innerHTML="";if(!f)return;
+      if(f.type.indexOf("image/")!==0){it.querySelector(".err").textContent="Choose an image file.";return}
+      nm=f.name;var rd=new FileReader();
+      rd.onload=function(){var im=new Image();im.onload=function(){var s=Math.min(1,360/im.width),cv=document.createElement("canvas");cv.width=im.width*s;cv.height=im.height*s;cv.getContext("2d").drawImage(im,0,0,cv.width,cv.height);img=cv.toDataURL("image/jpeg",.6);pv.innerHTML='<img class="prev" alt="Preview" src="'+img+'"><div class="hint" style="margin-top:6px;">'+esc(nm)+'</div>'};im.src=rd.result};
+      rd.readAsDataURL(f);
+    };
+    it.querySelector(".up").onclick=function(){
+      var er=it.querySelector(".err"),r=it.querySelector('input[type=radio]:checked');
+      if(!r)return er.textContent="Select a status.";
+      var mp=it.querySelector(".mi").value.trim();
+      if(r.value==="Due to unavailable parts"&&!mp)return er.textContent="Enter the missing parts before saving.";
+      var a=load();a.forEach(function(c){if(c.id===id){c.status=r.value;c.missing=r.value==="Due to unavailable parts"?mp:"";if(nm){c.proofName=nm;c.proofImg=img}c.updated=new Date().toISOString()}});
+      save(a);toast("Status updated for "+id);workerView();
+    };
+  });
+}
+
+/* ---------- Admin ---------- */
+function csv(rows){
+  var H=["Tracking ID","Student Email","Category","Priority","Description","Floor","Wing","Room","Meeting Date","Time Slot","Guard Supervision","Worker Status","Missing Parts","Proof File","Review Rating","Review Text","Created","Updated"];
+  var q=function(v){return'"'+String(v==null?"":v).replace(/"/g,'""')+'"'};
+  return [H.map(q).join(",")].concat(rows.map(function(c){return[c.id,c.email,c.cat,c.priority,c.desc,c.floor,c.wing,c.room,c.date,c.slot,c.guard?"Yes":"No",c.status,c.missing,c.proofName,c.review?c.review.rating:"",c.review?c.review.text:"",c.created,c.updated].map(q).join(",")})).join("\r\n");
+}
+function adminView(){
+  var all=load(),f="All";
+  function cnt(s){return all.filter(function(c){return c.status===s}).length}
+  function draw(){
+    var rows=all.filter(function(c){return f==="All"||c.status===f}).slice().reverse();
+    $("#tb").innerHTML=rows.length?rows.map(function(c){return'<tr><td class="tid">'+c.id+'</td><td>'+esc(c.email)+'</td><td>'+loc(c)+'</td><td><b>'+esc(c.cat)+'</b>'+(c.priority?'<br><span class="hint">'+c.priority+' priority</span>':'')+'</td><td>'+badge(c.status)+'</td><td>'+(esc(c.missing)||'<span class="hint">None</span>')+'</td><td>'+(c.review?'<span style="color:#ff9f0a; font-size:16px;">'+stars(c.review.rating)+'</span><br><span class="hint">'+esc(c.review.text)+'</span>':'<span class="hint">No review</span>')+'</td></tr>'}).join(""):'<tr><td colspan="7" class="empty">No complaints match this filter.</td></tr>';
+  }
+  $("#app").innerHTML='<div class="tools"><h2 style="font-size:24px;">Hostel overview</h2><div style="display:flex;gap:12px;flex-wrap:wrap"><button class="b1" id="dl">Download Data</button><button class="bn" id="cp">Copy CSV</button></div></div>'+
+  '<div class="stats"><div class="stat"><b>'+all.length+'</b><span>Total complaints</span></div><div class="stat"><b>'+cnt("Pending")+'</b><span>Pending</span></div><div class="stat"><b>'+cnt("Partially complete")+'</b><span>Partially complete</span></div><div class="stat"><b>'+cnt("Due to unavailable parts")+'</b><span>Waiting for parts</span></div><div class="stat"><b>'+cnt("Complete")+'</b><span>Complete</span></div></div>'+
+  '<div class="tools"><label style="margin:0; display:flex; align-items:center; gap:8px;">Filter by status <select id="fs"><option>All</option>'+Object.keys(ST).map(function(s){return'<option>'+s+'</option>'}).join("")+'</select></label></div>'+
+  '<div class="tw"><table><thead><tr><th>Tracking ID</th><th>Student email</th><th>Location</th><th>Category</th><th>Worker status</th><th>Missing parts</th><th>Student review</th></tr></thead><tbody id="tb"></tbody></table></div>';
+  draw();
+  $("#fs").onchange=function(){f=this.value;draw()};
+  $("#dl").onclick=function(){
+    if(!all.length)return toast("There is no data to export yet.");
+    try{var b=new Blob(["\ufeff"+csv(all)],{type:"text/csv;charset=utf-8"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="nitw_hostel_complaints.csv";document.body.appendChild(a);a.click();a.remove();toast("CSV download started. If nothing saved, use Copy CSV.")}catch(e){toast("Download blocked here. Use Copy CSV instead.")}
+  };
+  $("#cp").onclick=function(){
+    if(!all.length)return toast("There is no data to export yet.");
+    var t=csv(all);
+    function fb(){var d=$("#dlg");d.innerHTML='<h3 style="margin-bottom:8px;">CSV data</h3><p class="hint">Select all, copy, and paste into a .csv file.</p><textarea rows="8" readonly id="ct" style="margin:16px 0; font-family:monospace;"></textarea><button class="bn" style="width:100%" id="cx">Close</button>';d.showModal();$("#ct").value=t;$("#ct").select();$("#cx").onclick=function(){d.close()}}
+    try{navigator.clipboard.writeText(t).then(function(){toast("CSV copied to clipboard")},fb)}catch(e){fb()}
+  };
+}
+
+/* ---------- Router ---------- */
+function route(){
+  var me=user();
+  if(!me){loginView();return}
+  $("#who").textContent=me.role==="student"?me.email:me.role==="worker"?"Worker":"Administrator";
+  $("#who").classList.remove("hide");$("#out").classList.remove("hide");
+  if(me.role==="student")studentView(me);else if(me.role==="worker")workerView();else adminView();
+  window.scrollTo(0,0);
+}
+$("#out").onclick=function(){del(SES);route()};
+route();
+})();
+</script>
+</body>
+</html>
