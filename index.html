@@ -93,6 +93,7 @@ header.top {
 }
 
 /* Logo Styling */
+/* Logo Styling */
 .crest {
   width: 44px;
   height: 44px;
@@ -103,17 +104,21 @@ header.top {
   justify-content: center;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   overflow: hidden;
+  flex-shrink: 0;          /* stops the tile getting squashed on narrow phones */
 }
 .crest img {
   width: 90%;
   height: 90%;
-  object-fit: contain;
+  object-fit: contain;     /* whole logo always visible, never cropped or stretched */
+  display: block;          /* removes the stray gap under inline images */
 }
-
-.bar .t { flex: 1; min-width: 180px; }
-.bar .t b {
-  font-size: 19px;
-  display: block;
+/* Fallback: only shows if the logo file fails to load */
+.crest.nologo::after {
+  content: "NITW";
+  font: 700 11px/1 system-ui, sans-serif;
+  letter-spacing: .5px;
+  color: #1a3a8a;
+}
   /* Flashy gradient for header text */
   background: linear-gradient(135deg, #0071e3, #4158d0);
   -webkit-background-clip: text;
@@ -308,8 +313,11 @@ dialog::backdrop { background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(8px); -
 <header class="top"><div class="bar">
   <!-- Added the official NIT Warangal Logo here -->
   <div class="crest">
-    <img src="https://upload.wikimedia.org/wikipedia/en/e/e4/National_Institute_of_Technology%2C_Warangal_logo.png" alt="NIT Warangal Logo">
-  </div>
+  <!-- Local file: no hotlinking, so it can't break when someone else's server changes.
+       onerror is a safety net: if the file is ever missing, show a clean monogram, never a broken icon. -->
+  <img src="nitw-logo.png" alt="NIT Warangal logo" width="40" height="40"
+       onerror="this.parentNode.classList.add('nologo'); this.remove();">
+</div>
   <div class="t"><b>NITW Complaint Desk</b><span>Report it. Track it. Get it fixed.</span></div>
   <span class="who hide" id="who"></span>
   <button class="b1 hide" id="out">Log out</button>
